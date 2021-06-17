@@ -1,0 +1,16 @@
+
+.img-alert {
+  display: block;
+  object-fit: cover;
+  width: 100% !important;
+  height: 200px !important;
+}
+
+.alert-show-image {
+  --min-width: 380px;
+  --width: auto;
+  --min-height: auto;
+  --height: 500px;
+  --max-height: 90%;
+  color: red;
+}

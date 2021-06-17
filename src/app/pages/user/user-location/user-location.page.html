@@ -1,0 +1,121 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="header">
+    <ion-buttons slot="start">
+      <ion-back-button *ngIf="userRole" defaultHref="/home/perfil"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      <ion-label>
+        <ion-text >
+          <h2>Ubicación</h2>
+        </ion-text>
+      </ion-label>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content class="background-gray">
+  <ion-grid fixed>
+    <ion-card class="card-profile-margin">
+      <form [formGroup]="locationForm" (ngSubmit)="onSubmit()">
+        <ion-row>
+          <ion-col size="10" class="center">
+            <ion-list>
+              <ion-item>
+                <ion-icon name="location-outline" slot="start"></ion-icon>
+                <ion-label position="stacked"><strong>Provincia</strong></ion-label>
+                <ion-select *ngIf="provinces" formControlName="province" cancelText="Cancel" okText="Ok" name="province"
+                  #province (ionChange)="putCities(province.value)">
+                  <ion-select-option *ngFor="let province of provinces" value="{{province.id}}">
+                    {{province.name}}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+
+              <span class="center error-message">
+                {{ getError('province', 'Provincia')}}
+              </span>
+
+              <ion-item>
+                <ion-icon name="location-outline" slot="start"></ion-icon>
+                <ion-label position="stacked"><strong>Ciudad</strong></ion-label>
+                <ion-select *ngIf="cities" formControlName="city" name="city" cancelText="Cancel" okText="Ok" #city
+                  (ionChange)="putParishes(city.value)">
+                  <ion-select-option *ngFor="let city of cities" value="{{city.id}}">
+                    {{city.name}}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+
+              <span class="center error-message">
+                {{ getError('city', 'Ciudad')}}
+              </span>
+
+              <ion-item>
+                <ion-icon name="location-outline" slot="start"></ion-icon>
+                <ion-label position="stacked"><strong>Parroquia</strong> </ion-label>
+                <ion-select *ngIf="parishes" formControlName="parish" name="parish" cancelText="Cancel" okText="Ok">
+                  <ion-select-option *ngFor="let parish of parishes" value="{{parish.id}}">
+                    {{parish.name}}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+      
+              <span class="center error-message">
+                {{ getError('parish', 'Parroquia')}}
+              </span>
+
+                    
+              <ion-item>
+                <ion-icon name="location-outline" slot="start"></ion-icon>
+      
+                <ion-label position="stacked"><strong>Calle Principal</strong></ion-label>
+                <ion-input type="text" formControlName="main_street" name="main_street"></ion-input>
+              </ion-item>
+      
+              <span class="center error-message">
+                {{ getError('main_street', 'Calle Principal')}}
+              </span>
+
+              <ion-item>
+                <ion-icon name="location-outline" slot="start"></ion-icon>
+                <ion-label position="stacked"><strong>Número de Casa</strong></ion-label>
+                <ion-input type="text" formControlName="nomenclature" name="nomenclature"></ion-input>
+              </ion-item>
+      
+              <span class="center error-message">
+                {{ getError('nomenclature', 'Número de Casa')}}
+              </span>
+
+      
+              <ion-item>
+                <ion-icon name="location-outline" slot="start"></ion-icon>
+                <ion-label position="stacked"><strong>Calle Secundaria</strong></ion-label>
+                <ion-input type="text" formControlName="side_street" name="side_street"></ion-input>
+              </ion-item>
+      
+              <span class="center error-message">
+                {{ getError('side_street', 'Calle secundaria')}}
+              </span>
+
+              <div class="button-margin">
+                <ion-button type="submit" color="secondary" expand="block" class="button-profile" [disabled]="locationForm.invalid">
+                  Guardar
+                </ion-button>
+                
+                <ion-button color="light" expand="block" class="button-profile" routerDirection="root" routerLink="/home/perfil">
+                  Cancelar
+                </ion-button>
+              </div>
+
+            </ion-list>
+          </ion-col>
+        </ion-row>
+      </form>    
+    </ion-card>
+  </ion-grid>
+
+
+
+  
+</ion-content>

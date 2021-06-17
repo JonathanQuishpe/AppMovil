@@ -1,0 +1,105 @@
+<div *ngIf="form">
+  
+  <div [formGroup]="form">
+    <ion-card class="card-question">
+      <ion-icon name="help-circle-outline" slot="start"></ion-icon>
+      <ion-label class="label-margin-question">
+        <ion-text>
+          <h3>{{question.question}}</h3>
+        </ion-text>
+      </ion-label>  
+      <div *ngIf="userRole == 'Supervisor' && platformDeploy=='browser' && question.image" class="padding-icon">
+        <ion-chip tappable (click)="chosenFile.click()" class="chip"  [style.background]="form.controls[question.id+'img'].status == 'VALID' ? '#5e8bad': '#cccccc'">
+          <input style="display:none;" type="file" accept="image/*" (change)="fileSelected($event, question.id+'img')" #chosenFile />
+          <input type="hidden" [formControlName]="question.id+'img'" />
+          <ion-icon name="folder-open" [style.margin]="0" ></ion-icon>
+        </ion-chip>
+        <ion-chip *ngIf="form.controls[question.id+'img'].status == 'VALID'" tappable (click)="deleteImage(question.id+'img')" class="chip">
+          <ion-icon name="trash" [style.margin]="0" ></ion-icon>
+        </ion-chip>
+        <ion-chip *ngIf="form.controls[question.id+'img'].status == 'VALID'" tappable (click)="showAlertImage(question.id+'img')" class="chip">
+          <ion-icon name="eye" [style.margin]="0" ></ion-icon>
+        </ion-chip>
+      </div>
+
+      <div *ngIf="userRole == 'Supervisor' && platformDeploy!='browser' && question.image" >
+        <ion-chip tappable (click)="takePhotoQuestion(question.id+'img')" class="chip" [style.background]="form.controls[question.id+'img'].status == 'VALID' ? '#2dd36f': '#cccccc'">
+          <input type="hidden" [formControlName]="question.id+'img'" />
+          <ion-icon name="camera" [style.margin]="0"></ion-icon>
+        </ion-chip>
+        <ion-chip *ngIf="form.controls[question.id+'img'].status == 'VALID'" tappable (click)="deleteImage(question.id+'img')" class="chip">
+          <ion-icon name="trash" [style.margin]="0" ></ion-icon>
+        </ion-chip>
+        <ion-chip *ngIf="form.controls[question.id+'img'].status == 'VALID'" tappable (click)="showAlertImage(question.id+'img')" class="chip">
+          <ion-icon name="eye" [style.margin]="0" ></ion-icon>
+        </ion-chip>
+      </div>
+
+    
+      <div>
+        <div [ngSwitch]="question.type">
+          <ion-item *ngSwitchCase="'shortText'" >
+            <ion-input type="text" [formControlName]="question.id" (ionChange)="saveChanges()"></ion-input>
+          </ion-item>
+          
+          <ion-item *ngSwitchCase="'number'">
+            <ion-input  type="number" [formControlName]="question.id" (ionChange)="saveChanges()"></ion-input>
+          </ion-item>
+          
+          <ion-item *ngSwitchCase="'longText'">
+            <ion-textarea  [formControlName]="question.id" [id]="question.id" (ionChange)="saveChanges()"></ion-textarea>
+          </ion-item>
+          
+    
+          <ion-item *ngSwitchCase="'combo'">
+            <ion-select [id]="question.id"  [formControlName]="question.id" (ionChange)="saveChanges()">
+              <ion-select-option *ngFor="let option of question.value; let i = index" value="{{ i }}">
+                {{ option }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+    
+          <ion-list *ngSwitchCase="'checklist'">
+            <ion-item *ngFor="let control of form.controls[question.id]['controls']; let i = index" lines="none" class="height-item-checkbox">
+              <ion-label >{{ question.value[i] }}</ion-label>
+              <ion-checkbox slot="start" [formControl]="control" (ionChange)="saveChanges()" ></ion-checkbox>
+            </ion-item>
+          </ion-list>
+    
+          <ion-list *ngSwitchCase="'radioButton'">
+            <ion-radio-group [formControlName]="question.id" (ionChange)="saveChanges()">
+              <ion-item *ngFor="let option of question.value; let i = index"  lines="none" class="height-item-checkbox">
+                <ion-label>{{ option }}</ion-label>
+                <ion-radio slot="start" value="{{ i }}"></ion-radio>
+              </ion-item>
+            </ion-radio-group>
+          </ion-list>
+    
+          <ion-item *ngSwitchCase="'date'">
+            <ion-datetime  displayFormat="YYYY/MM/DD" [formControlName]="question.id" [id]="question.id" (ionChange)="saveChanges()">
+            </ion-datetime>
+          </ion-item>
+    
+          <ion-item *ngSwitchCase="'hour'">
+            <ion-datetime displayFormat="HH:mm" [formControlName]="question.id" [id]="question.id" (ionChange)="saveChanges()">
+            </ion-datetime>
+          </ion-item>
+          <ion-range
+            *ngSwitchCase="'ranger'"
+            min="{{ question.value[0] ? question.value[0] : 0 }}"
+            step="{{ question.value[1] ? question.value[1] : 1 }}"
+            max="{{ question.value[2] ? question.value[2] : 10 }}"
+            [formControlName]="question.id"
+            (ionChange)="saveChanges()"
+            snaps="true"
+            ticks="true"
+            pin="true"
+          >
+          <ion-label slot=start>{{question.value[0]}}</ion-label>
+          <ion-label slot=end>{{question.value[2]}}</ion-label>
+          </ion-range>
+        </div>
+      </div>
+    </ion-card>
+  </div>
+</div>

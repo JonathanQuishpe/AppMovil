@@ -1,0 +1,20 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="header">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title *ngIf="poll">
+      <ion-label>
+        <ion-text >
+          <h2>{{poll.name}}</h2>
+        </ion-text>
+      </ion-label>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="background-gray">
+ 
+  <app-dynamic-form *ngIf="poll" [poll]="poll" [config]="configSelected" [userRole]="userRole" [institution]="institution" [reward]="reward">
+  </app-dynamic-form>
+  
+</ion-content>

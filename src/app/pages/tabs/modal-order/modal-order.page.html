@@ -1,0 +1,49 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="header">
+    <ion-buttons slot="start">
+      <!-- <ion-back-button  [defaultHref]="'tabs/'+originPage" (click)="dismiss()"></ion-back-button> -->
+      <ion-button (click)="dismiss()" expand="block" fill="clear" class="button-login">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    
+    <ion-buttons slot="end">
+      
+      <ion-button (click)="clean()" expand="block" fill="clear" class="button-login">
+        Limpiar
+      </ion-button>
+      <ion-button (click)="dismiss()" expand="block" fill="clear" class="button-login">
+        Listo
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title>
+      <ion-label>
+        <ion-text class="ion-text-center">
+          <h2>Ordenar</h2>
+        </ion-text>
+      </ion-label>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content class="background-gray">
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col size="12" class="center">
+        <ion-card class="card-poll-margin">
+          <ion-list *ngIf="orderListName">
+            <ion-radio-group *ngFor="let item of orderListName" [(ngModel)]="orderValue">         
+              <ion-item lines="none">
+                <ion-label>{{item}}</ion-label>
+                <ion-radio [value]="item"></ion-radio>
+              </ion-item>
+            </ion-radio-group>
+          </ion-list>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+

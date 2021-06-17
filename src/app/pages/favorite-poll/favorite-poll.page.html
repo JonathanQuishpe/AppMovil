@@ -1,0 +1,114 @@
+<ion-content [fullscreen]="true" class="background-gray">
+  <ion-grid fixed class="padding-bottom-none">
+    <ion-row>
+<!--       <ion-col size-xs="2" size-md="2">
+        
+      </ion-col> -->
+      <ion-col size-xs="8" size-md="12" class="center">
+        <ion-segment (ionChange)="chargePanel($event)" value="poll" mode="ios">
+          <ion-segment-button value="poll" class="button-login">
+            <ion-label>
+              <ion-text>
+                <p [style.font-size]="'12px'">Encuestas</p>
+              </ion-text>
+            </ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="reward" class="button-login">
+            <ion-label>
+              <ion-text>
+                <p [style.font-size]="'12px'">Recompensas</p>
+              </ion-text>
+            </ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-col>
+      <!-- <ion-col size-xs="2" size-md="2">
+        <ion-icon name="trash-bin-outline" (click)="cleanFavorites()" class="center center-vertical"></ion-icon>
+      </ion-col> -->
+    </ion-row>
+  </ion-grid>
+
+  <div [ngSwitch]="panelDetail">
+    <div *ngSwitchCase="'poll'">
+      <ion-grid fixed class="padding-top-none">
+          <!-- <ion-col size-sm="12" size-md="10" size-xs="12" size-lg="4" class="center"> -->
+          
+        <ng-container *ngIf="checkFavorites(favoriteConfigPoll); then favoriteConfigPollTemplate; else noFavoriteConfigPollTemplate"></ng-container>
+        <ng-template #favoriteConfigPollTemplate>
+          <ion-row>
+            <ion-col size="12" *ngFor="let configPoll of favoriteConfigPoll; let i=index">
+              <ion-card class="card-poll-margin" >
+                <ion-item lines="none" button tappable (click)="continueConfigPoll(i, true)">
+                  <ion-avatar slot="start">
+                      <img [src]="onErrorImg(configPoll.institution.image)">
+                  </ion-avatar>
+                  <ion-label>
+                    <h3><strong>Encuesta: </strong>{{configPoll.poll.name}}</h3>
+                    <p><ion-icon name="gift-outline" slot="end"></ion-icon> {{configPoll.reward.name}}</p>
+                    <p>
+                      <ion-icon name="business-outline" slot="start"></ion-icon> {{configPoll.institution.name}}
+                    </p>
+                  </ion-label>
+                  <ion-icon name="chevron-forward" slot="end"></ion-icon>
+                </ion-item>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ng-template>
+
+        <ng-template #noFavoriteConfigPollTemplate>
+          <div class="img-default-no-data item-traslucent">
+            <ion-item lines="none">
+              <ion-label class="ion-text-center">
+                <p>No tienes favoritos</p>
+              </ion-label>
+            </ion-item>
+            <img src="../../../assets/img/star_favorites.png" />
+          </div>
+        </ng-template>
+      </ion-grid>
+    </div>
+
+    <div *ngSwitchCase="'reward'">
+      <ion-grid fixed class="padding-top-none">
+        <ng-container *ngIf="checkFavorites(favoriteConfigReward); then favoriteConfigRewardTemplate; else elseTemplate"></ng-container>
+        <ng-template #favoriteConfigRewardTemplate>
+          <ion-row>
+            <ion-col size="12" *ngFor="let configPoll of favoriteConfigReward; let i=index">
+              <ion-card class="card-poll-margin" >
+                <ion-item lines="none" button tappable (click)="continueConfigPoll(i, false)">
+                  <ion-thumbnail [style.margin-right]="'10px'">
+                    <img [src]="onErrorImg(configPoll.reward.image)" />
+                  </ion-thumbnail>
+                  <ion-label >
+                    <h3><strong>Recompensa: </strong>{{configPoll.reward.name}}</h3>
+                    <p>
+                      <ion-icon name="gift-outline" slot="end"></ion-icon>
+                      {{configPoll.reward.name}}
+                    </p>
+                    <p>
+                      <ion-icon name="business-outline" slot="start"></ion-icon>
+                      {{configPoll.institution.name}}
+                    </p>
+                  </ion-label>
+                  <ion-icon name="chevron-forward" slot="end"></ion-icon>
+                </ion-item>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ng-template>
+
+        <ng-template #elseTemplate>
+          <div class="img-default-no-data item-traslucent">
+            <ion-item lines="none">
+              <ion-label class="ion-text-center">
+                <p>No tienes favoritos</p>
+              </ion-label>
+            </ion-item>
+            <img src="../../../assets/img/star_favorites.png" />
+          </div>
+        </ng-template>
+      </ion-grid>
+    </div>
+  </div>
+</ion-content>

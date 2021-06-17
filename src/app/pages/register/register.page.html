@@ -1,0 +1,105 @@
+<ion-content>
+    <ion-grid>
+        <ion-row>
+            <ion-col>
+                <ion-img [src]="uriLogo" class="center logo-boo"></ion-img>
+            </ion-col>
+        </ion-row>
+
+        <ion-row>
+            <ion-text color="tertiary" class="ion-text-center center">
+                <h1 class="login-title"><strong>Crea tu cuenta Boo</strong></h1>
+            </ion-text>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <form [formGroup]="registerForm" (ngSubmit)="register()">
+                    <ion-row>
+                        <ion-col size-sm="10" size-md="10" size-xs="10" size-lg="4" class="center padding-none">
+                            <ion-list class="line-input" >
+                                <div class="error-messages">
+                                    <ng-container *ngFor="let error of errorMessages.user">
+                                        <div class="error-message item-traslucent" *ngIf="registerForm.get('user').hasError(error.type)&&(registerForm.get('user').dirty||registerForm.get('user').touched)">
+                                            {{error.message}}
+                                        </div>
+                                    </ng-container>
+                                </div>
+                                <ion-item>
+                                    <ion-input placeholder="Nombre de usuario" type="text" formControlName="user" name="user"></ion-input>
+                                </ion-item>
+                                <div class="error-messages">
+                                    <ng-container *ngFor="let error of errorMessages.email">
+                                        <div class="error-message item-traslucent" *ngIf="registerForm.get('email').hasError(error.type)&&(registerForm.get('email').dirty||registerForm.get('email').touched)">
+                                            {{error.message}}
+                                        </div>
+                                    </ng-container>
+                                </div>
+                                <ion-item>
+                                    <ion-input placeholder="Dirección de correo electrónico" formControlName="email" type="text" name="email">
+                                    </ion-input>
+                                </ion-item>
+                               
+                                <div class="error-messages">
+                                    <ng-container *ngFor="let error of errorMessages.password">
+                                        <div class="error-message item-traslucent" *ngIf="registerForm.get('password').hasError(error.type)&&(registerForm.get('password').dirty||registerForm.get('password').touched)">
+                                            {{error.message}}
+                                        </div>
+                                    </ng-container>
+                                </div>
+                                <ion-item>
+                                    <ion-input placeholder="Contraseña" formControlName="password" type="password" name="pass"></ion-input>
+                                </ion-item>
+                                
+                                <div class="error-messages">
+                                    <ng-container *ngFor="let error of errorMessages.confirmpassword">
+                                        <div class="error-message" *ngIf="registerForm.get('confirmpassword').hasError(error.type) && (registerForm.get('confirmpassword').dirty || registerForm.get('confirmpassword').touched)">
+                                            {{ error.message }}
+                                        </div>
+                                    </ng-container>
+                                    <div class="error-message" *ngIf="!registerForm.get('confirmpassword').errors && registerForm.hasError('passwordNotMatch') && (registerForm.get('confirmpassword').dirty || registerForm.get('confirmpassword').touched)">
+                                        Los campos Contraseña y Confirmar contraseña deben coincidir
+                                    </div>
+                                </div>
+                                <ion-item>
+                                    <ion-input placeholder="Confirmación de contraseña"  type="password" name="confirmpassword" formControlName="confirmpassword"></ion-input>
+                                </ion-item>
+                               
+                            </ion-list>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col size-sm="10" size-md="10" size-xs="10" size-lg="4" class="center padding-none">
+                            <ion-button [disabled]="!registerForm.valid " type="submit" color="secondary" expand="block" class="button-login">
+                                Registrarse
+                            </ion-button>
+                        </ion-col>
+                    </ion-row>
+                </form>
+            </ion-col>
+        </ion-row>
+
+        <ion-row>
+            <ion-col size-sm="10" size-md="10" size-xs="10" size-lg="4" class="center">
+                <ion-button type="submit" color="facebook" expand="block" class="button-login">
+                    <ion-icon name="logo-facebook" slot="start"></ion-icon>
+                    Registrarse con Facebook
+                </ion-button>
+            </ion-col>
+        </ion-row>
+
+        <ion-row>
+            <ion-col size-sm="10" size-md="10" size-xs="10" size-lg="4" class="center">
+                <ion-button type="submit" color="google" expand="block" class="button-login ">
+                    <ion-icon name="logo-google" slot="start" color="danger"></ion-icon>
+                    Registrarse con Google
+                </ion-button>
+            </ion-col>
+        </ion-row>
+
+        <ion-row>
+            <ion-text class="ion-text-center center" color="primary">
+                <p><a style="font-size:14px;" href="/ " routerDirection="root " routerLink="/" tappable >¿Ya tienes una cuenta?</a></p>
+            </ion-text>
+        </ion-row>
+    </ion-grid>
+</ion-content>

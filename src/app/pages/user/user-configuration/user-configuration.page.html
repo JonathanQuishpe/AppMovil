@@ -1,0 +1,51 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="header">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home/perfil"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      <ion-label>
+        <ion-text >
+          <h2>Configuración</h2>
+        </ion-text>
+      </ion-label>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="background-gray">
+  <ion-grid fixed>
+    <ion-card class="card-profile-margin">
+      <form [formGroup]="configurationForm" >
+        <ion-row>
+          <ion-col size="12" class="center">
+            <ion-list>
+              <ion-item lines="none">
+                <ion-label [style.font-size]="'14px'"><strong>Recibir notificaciones</strong></ion-label>
+                <ion-toggle slot="start" mode="ios" formControlName="push_notification" name="push_notification" (click)="saveChanges('push_notification')"></ion-toggle>
+              </ion-item>
+            
+              <ion-item lines="none">
+                <ion-label [style.font-size]="'14px'" class="ion-text-wrap">
+                  <strong>Recibir notificaciones de correo electrónico</strong>
+                </ion-label>
+                <ion-toggle slot="start" mode="ios" formControlName="email_notification" name="email_notification" (click)="saveChanges('email_notification')"></ion-toggle>
+              </ion-item>
+            
+              <ion-item lines="none">
+                <ion-label [style.font-size]="'14px'"><strong>Darse de baja</strong></ion-label>
+                <ion-toggle slot="start" mode="ios" formControlName="blocked" name="blocked" (click)="blockUser()"></ion-toggle>
+              </ion-item>
+
+              <ion-item lines="none">
+                <ion-label [style.font-size]="'14px'"><strong>Modo oscuro</strong></ion-label>
+                <ion-toggle slot="start" mode="ios" formControlName="theme" name="theme" (click)="changeTheme()"></ion-toggle>
+              </ion-item>
+
+            </ion-list>
+          </ion-col>
+        </ion-row>
+      </form>
+    </ion-card>
+  </ion-grid>
+</ion-content>

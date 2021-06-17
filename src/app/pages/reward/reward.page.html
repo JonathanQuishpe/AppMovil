@@ -1,0 +1,60 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="header">
+    <ion-title>
+      <ion-label>
+        <ion-text class="ion-text-center">
+          <h2>Recompensa</h2>
+        </ion-text>
+      </ion-label>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="background-gray">
+  <ion-grid fixed>
+ 
+    <ion-row>
+      <ion-col size="12" class="center" >
+        <ion-card *ngIf="wallet && !noReward" class="card-poll-margin" >
+          <ion-card-header>
+            <ion-card-subtitle>Recompensa</ion-card-subtitle>
+            <ion-card-title>{{wallet.reward.name}}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-item >
+              <ion-icon name="copy" slot="end"></ion-icon>
+              <ion-icon name="share-social" slot="end"></ion-icon>
+              <ion-label><p>{{wallet.unique}}</p></ion-label>
+            </ion-item>
+            <ngx-qrcode [value] = "wallet.unique" class="qrcode"></ngx-qrcode>
+            <!-- <img src="../../../assets/img/temp_qr.jpg" class="img" /> -->
+          </ion-card-content>
+        </ion-card>
+        <div class="button-margin" *ngIf="noReward">
+          <ion-button type="submit" color="secondary" expand="block" class="button-profile" (click)="toWallet()">
+            Mira en tu billetera
+          </ion-button>
+        </div>
+
+        <ion-card *ngIf="noReward" class="card-poll-margin">
+          <ion-card-header *ngIf="noReward">
+            <ion-card-title class="ion-text-center">
+              Muchas Gracias
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content *ngIf="noReward">
+            <img src="../../../assets/img/temp_qr.jpg" class="img" />
+          </ion-card-content>
+        </ion-card>
+        
+        <div class="button-margin">
+          <ion-button type="submit" color="secondary" expand="block" class="button-profile" (click)="toHome()">
+            Ir al Inicio
+          </ion-button>
+        </div>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+ 
+</ion-content>

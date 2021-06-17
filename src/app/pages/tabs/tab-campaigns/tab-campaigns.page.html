@@ -1,0 +1,58 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="header">
+    <ion-title>
+      <ion-label>
+        <ion-text class="ion-text-center">
+          <h2>Campañas</h2>
+        </ion-text>
+      </ion-label>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="background-gray">
+  <ion-grid fixed *ngIf="userInstitutionsComplete">
+    <div *ngFor="let institution of userInstitutionsComplete; let i = index;">
+      <ion-row>
+        <ion-col size="12" class="center">
+          <ion-card class="card-poll-margin">
+            <ion-item lines="none" tappable (click)="toggleSection(i)" button>
+              <ion-avatar slot="start">
+                  <img [src]="onErrorImg(institution.image)">
+              </ion-avatar>
+              <ion-label>
+                <h3>{{institution.name}}</h3>
+                <p>
+                  {{numberOfConfig(institution.configuration)}}
+                </p>
+              </ion-label>
+              <ion-icon name="chevron-down" slot="end" *ngIf="numberOfConfig(institution.configuration) != 'Sin estudios establecidos'"></ion-icon>
+            </ion-item>
+            
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <div *ngIf="institution.open">
+        <ion-row *ngFor="let configuration of institution.configuration; let j = index;">
+          <ion-col size="12">
+            <ion-card class="card-poll-margin" tappable>
+              <ion-item tappable (click)="goToStatistics(i, j)">
+                <ion-label>
+                  <h3><strong>{{configuration.name}}</strong></h3>
+                  <p>
+                    {{configuration.poll.name}}
+                  </p>
+                  <p class="text-capitalize">
+                    {{configuration.date_end  | date:'MMMM dd' }}
+                  </p>
+                </ion-label>
+                <ion-icon name="chevron-forward" slot="end"></ion-icon>
+              </ion-item>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </div>
+    </div>
+    
+  </ion-grid>
+</ion-content>

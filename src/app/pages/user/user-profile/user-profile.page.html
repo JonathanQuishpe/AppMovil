@@ -1,0 +1,211 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="header">
+    <ion-buttons slot="start">
+      <ion-back-button *ngIf="userRole" defaultHref="/home/perfil"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      <ion-label>
+        <ion-text >
+          <h2>Información Personal</h2>
+        </ion-text>
+      </ion-label>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="background-gray">
+  <ion-grid fixed>
+    <ion-card class="card-profile-margin">
+      <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+        <ion-row>
+          <ion-col size="12">
+            <div *ngIf="platformDeploy == 'ios' || platformDeploy=='android'">
+              <ion-item lines="none">
+                <ion-avatar slot="start">
+                  <img [src]='image' alt="avatar" (click)="takePhoto()">
+                  <input type="hidden" formControlName="imgProfile" name="imgProfile" />
+                </ion-avatar>
+                <!-- <div class="buttonCamera">
+                  <ion-chip class="chip" color="primary">
+                    <input type="hidden" formControlName="imgProfile" name="imgProfile" />
+                    <ion-icon name="camera" [style.margin]="0" (click)="takePhoto()"></ion-icon>
+                  </ion-chip>
+                </div> -->
+                <ion-label>
+                  <ion-text>
+                    <h2><strong class="strong-color">Usuario: </strong>{{userName}}</h2>
+                  </ion-text>
+                  <ion-text>
+                    <h3><strong class="strong-color">Email: </strong>{{email}}</h3>
+                  </ion-text>
+                </ion-label>
+              </ion-item>
+            </div>
+            <div *ngIf="platformDeploy == 'browser'">
+              <ion-item>
+                <ion-avatar slot="start">
+                  <img [src]='image' alt="avatar" (click)="chosenFile.click()">
+                  <input style="display:none;" type="file" accept="image/*" (change)="fileSelected($event)" #chosenFile />
+                    <input type="hidden" formControlName="imgProfile" name="imgProfile" />
+                </ion-avatar>
+              <!--  <div class="buttonCamera">
+                  <ion-chip class="chip" color="primary">
+                    <input style="display:none;" type="file" accept="image/*" (change)="fileSelected($event)" #chosenFile />
+                    <input type="hidden" formControlName="imgProfile" name="imgProfile" />
+                    <ion-icon name="folder-open" [style.margin]="0" (click)="chosenFile.click()"></ion-icon>
+                  </ion-chip>
+                </div> -->
+                <ion-label>
+                  <ion-text>
+                    <h2><strong>Usuario: </strong>{{userName}}</h2>
+                  </ion-text>
+                  <ion-text>
+                    <h3><strong>Email: </strong>{{email}}</h3>
+                  </ion-text>
+                </ion-label>
+              </ion-item>
+            </div>
+              
+          </ion-col>
+
+          <ion-col size="10" class="center">
+            <ion-list>
+              <!-- <ion-item  >
+                <div class="imgProfile" *ngIf="platformDeploy == 'ios' || platformDeploy=='android'">
+                  <img [src]="image" alt="avatar" class="imgRedonda" >
+                  <div class="buttonCamera">
+                    <ion-chip class="chip" color="primary">
+                      <input type="hidden" formControlName="imgProfile" name="imgProfile" />
+                      <ion-icon name="camera" [style.margin]="0" (click)="takePhoto()"></ion-icon>
+                    </ion-chip>
+                  </div>
+                </div> 
+                <div class="imgProfile" *ngIf="platformDeploy == 'browser'">
+                  <img [src]="image" alt="avatar" class="imgRedonda">
+                  <div class="buttonCamera">
+                    <ion-chip class="chip" color="primary">
+                      <input style="display:none;" type="file" accept="image/*" (change)="fileSelected($event)" #chosenFile />
+                      <input type="hidden" formControlName="imgProfile" name="imgProfile" />
+                      <ion-icon name="folder-open" [style.margin]="0" (click)="chosenFile.click()"></ion-icon>
+                    </ion-chip>
+                  </div>
+                </div>
+              </ion-item> -->
+              
+              <!-- <button class="btnAttach" (click)="chosenFile.click()"><ion-icon class="attach" name="attach"></ion-icon></button> -->
+              <ion-item  >
+                <ion-icon name="finger-print-outline" slot="start"></ion-icon>
+                <ion-label position="stacked"><strong>Documento</strong></ion-label>
+                <ion-input formControlName="document" type="text" name="document"></ion-input>
+              </ion-item>
+              <span class="center error-message">
+                {{ getError('document', 'Documento')}}
+              </span>
+    
+              <ion-item  >
+                <ion-icon name="person" slot="start"></ion-icon>
+                <ion-label position="stacked"><strong>Nombres</strong></ion-label>
+                <ion-input
+                  formControlName="first_name"
+                  type="text"
+                  name="first_name"
+                ></ion-input>
+              </ion-item>
+              <span class="center error-message">
+                {{ getError('first_name', 'Nombres')}}
+              </span>
+    
+              <ion-item  >
+                <ion-icon name="person" slot="start"></ion-icon>
+                <ion-label position="stacked"><strong>Apellidos</strong></ion-label>
+                <ion-input formControlName="last_name" type="text" name="last_name"></ion-input>
+              </ion-item>
+              <span class="center error-message">
+                {{ getError('last_name', 'Apellidos')}}
+              </span>
+    
+              <ion-item  >
+                <ion-icon name="people-circle-outline" slot="start"></ion-icon>
+                <ion-label position="stacked"><strong>Estado civil</strong></ion-label>
+                <ion-select *ngIf="maritalStatuses" cancelText="Cancel" okText="Ok" formControlName="maritalStatus" name="maritalStatus">
+                  <ion-select-option *ngFor="let maritalStatus of maritalStatuses" value="{{maritalStatus.id}}">
+                    {{maritalStatus.name}}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+              <span class="center error-message">
+                {{ getError('maritalStatus', 'Estado civil')}}
+              </span>
+    
+              <ion-item  >
+                <ion-icon name="transgender-outline" slot="start"></ion-icon>
+                <ion-label position="stacked"><strong>Género</strong></ion-label>
+                <ion-select *ngIf="genders" cancelText="Cancel" okText="Ok" formControlName="gender" name="gender">
+                  <ion-select-option *ngFor="let gender of genders" value="{{gender.id}}">{{gender.name}}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+              <span class="center error-message">
+                {{ getError('gender', 'Género')}}
+              </span>
+    
+              
+                <ion-item>
+                  <ion-icon name="language-outline" slot="start"></ion-icon>
+                  <ion-label position="stacked"><strong>Idiomas</strong></ion-label>
+                  <ion-select *ngIf="languages" multiple="true" formControlName="languages" name="languages">
+                    <ion-select-option *ngFor="let language of languages" value="{{language.id}}">
+                      {{language.name}}
+                    </ion-select-option>
+                  </ion-select>
+                </ion-item>
+                <span class="center error-message">
+                  {{ getError('languages', 'Idiomas')}}
+                </span>
+             
+              <!-- <ion-item  >
+                <ion-icon name="language-outline" slot="start"></ion-icon>
+                <ion-label position="stacked"><strong>Idiomas</strong></ion-label>
+                <ion-select *ngIf="languages" formControlName="languages" name="languages">
+                  <ion-select-option *ngFor="let language of languages" value="{{language.id}}">
+                    {{language.name}}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+              <span class="center error-message">
+                {{ getError('languages', 'Idiomas')}}
+              </span> -->
+    
+              <ion-item  > 
+                <ion-icon name="call-outline" slot="start"></ion-icon>
+                <ion-label position="stacked"><strong>Celular</strong></ion-label>
+                <ion-input formControlName="cellphone" type="text" name="cellphone"></ion-input>
+              </ion-item>
+              <span class="center error-message">
+                {{ getError('cellphone', 'Celular')}}
+              </span>
+
+              <ion-item  >
+                <ion-icon name="calendar-outline" slot="start"></ion-icon>
+                <ion-label position="stacked"><strong>Fecha de nacimiento</strong></ion-label>
+                <ion-datetime displayFormat="YYYY/MM/DD" [max]="maxDate" formControlName="birthdate" name="birthdate">
+                </ion-datetime>
+              </ion-item>
+              
+              <div class="button-margin">
+                <ion-button type="submit" color="secondary" expand="block" class="button-profile" [disabled]="profileForm.invalid">
+                  Guardar
+                </ion-button>
+                
+                <ion-button color="light" expand="block" class="button-profile" routerDirection="root" routerLink="/home/perfil">
+                  Cancelar
+                </ion-button>
+              </div>
+
+            </ion-list>
+          </ion-col>
+        </ion-row>
+      </form>
+    </ion-card>
+  </ion-grid>
+</ion-content>

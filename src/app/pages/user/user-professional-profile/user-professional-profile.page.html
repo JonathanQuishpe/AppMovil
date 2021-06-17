@@ -1,0 +1,79 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="header">
+    <ion-buttons slot="start">
+      <ion-back-button *ngIf="userRole" defaultHref="/home/perfil"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      <ion-label>
+        <ion-text >
+          <h2>Perfil profesional</h2>
+        </ion-text>
+      </ion-label>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="background-gray">
+  <ion-grid fixed>
+    <ion-card class="card-profile-margin">
+      <form [formGroup]="professionalProfileForm" (ngSubmit)="onSubmit()">
+        <ion-row>
+          <ion-col size="10" class="center">
+            <ion-list>
+              <ion-item>
+                <ion-icon name="briefcase-outline" slot="start"></ion-icon>
+                <ion-label position="stacked"><strong>Profesión</strong></ion-label>
+                <ion-select *ngIf="professions" formControlName="profession" name="profession" #profession
+                  (ionChange)="putOccupations(profession.value)">
+                  <ion-select-option *ngFor="let profession of professions" value="{{profession.id}}">
+                    {{profession.name}}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+              <span class="center error-message">
+                {{ getError('profession', 'Profesión')}}
+              </span>
+
+              <ion-item>
+                <ion-icon name="briefcase-outline" slot="start"></ion-icon>
+                <ion-label position="stacked"><strong>Ocupación</strong></ion-label>
+                <ion-select *ngIf="occupations" formControlName="occupation" name="occupation">
+                  <ion-select-option *ngFor="let occupation of occupations" value="{{occupation.id}}">
+                    {{occupation.name}}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+              <span class="center error-message">
+                {{ getError('occupation', 'Ocupación')}}
+              </span>
+
+              <ion-item>
+                <ion-icon name="briefcase-outline" slot="start"></ion-icon>
+                <ion-label position="stacked"><strong>Estudios</strong></ion-label>
+                <ion-select *ngIf="studies" formControlName="study" name="study">
+                  <ion-select-option *ngFor="let study of studies" value="{{study.id}}">
+                    {{study.name}}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+              <span class="center error-message">
+                {{ getError('study', 'Estudios')}}
+              </span>
+
+              <div class="button-margin">
+                <ion-button type="submit" color="secondary" expand="block" class="button-profile" [disabled]="professionalProfileForm.invalid">
+                  Guardar
+                </ion-button>
+                
+                <ion-button color="light" expand="block" class="button-profile" routerDirection="root" routerLink="/home/perfil">
+                  Cancelar
+                </ion-button>
+              </div>
+      
+            </ion-list>
+          </ion-col>
+        </ion-row>
+      </form>
+    </ion-card>
+  </ion-grid>
+</ion-content>

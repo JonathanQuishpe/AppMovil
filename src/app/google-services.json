@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "527892570172",
+    "firebase_url": "https://booapp.firebaseio.com",
+    "project_id": "booapp",
+    "storage_bucket": "booapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:527892570172:android:3ccc0324ed5ecc3267a339",
+        "android_client_info": {
+          "package_name": "com.boo.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "527892570172-u6ldaqinkpl475ho578f8ea245vtb6gh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDb7hT68KAadUshEZ_SfRKaDAkOn-789Wc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "527892570172-u6ldaqinkpl475ho578f8ea245vtb6gh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

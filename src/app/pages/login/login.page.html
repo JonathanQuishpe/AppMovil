@@ -1,0 +1,103 @@
+
+<ion-content>
+    <ion-grid>
+        <ion-row>
+            <ion-col>
+                <ion-img [src]="uriLogo" class="center logo-boo" color="light"></ion-img>
+            </ion-col>
+        </ion-row>
+
+        <ion-row>
+            <ion-text color="tertiary" class="ion-text-center center">
+                <h1 class="login-title"><strong>Inicia sesión</strong></h1>
+            </ion-text>
+        </ion-row>
+
+        <ion-row>
+            <ion-col>
+                <form [formGroup]="loginForm"  (ngSubmit)="login()">
+                    <div class="error-messages" *ngIf="msg.error">
+                        <ng-container>
+                            <div class="error-message" >{{msg.message}}</div>
+                        </ng-container>
+                    </div>
+                    <ion-row>
+                        <ion-col size-sm="10" size-md="10" size-xs="10" size-lg="4" class="center padding-none">
+                            <ion-list class="line-input">
+                                <div class="error-messages" *ngIf="emailField.errors && emailField.dirty">
+                                    <ng-container>
+                                        <div class="error-message" *ngIf="emailField.hasError('email')">El campo correo es invalido</div>
+                                        <div class="error-message" *ngIf="emailField.hasError('required')">El campo correo es requerido</div>
+                                    </ng-container>
+                                </div>
+                                <ion-item>
+                                    <ion-input placeholder="Dirección de correo electrónico" formControlName="identifier" type="text" name="identifier">                                      
+                                    </ion-input>
+                                </ion-item>
+                                <div class="error-messages" *ngIf="passField.errors && passField.dirty">
+                                    <ng-container>
+                                        <div class="error-message" *ngIf="passField.hasError('required')">El campo contraseña es requerido</div>
+                                    </ng-container>
+                                </div>
+                                <ion-item>
+                                    <ion-input placeholder="Contraseña" formControlName="password" type="password" ></ion-input>
+                                </ion-item>
+                               
+                            </ion-list>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col size-sm="10" size-md="10" size-xs="10" size-lg="4" class="center padding-none" >
+                            <ion-button [disabled]="!loginForm.valid" type="submit" color="secondary" expand="block" class="button-login ">
+                                Iniciar Sesión
+                            </ion-button>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-text class="ion-text-center center" color="danger">
+                            <p><a style="font-size:14px;" href="/ " tappable>¿Olvidaste tu Contraseña?</a></p>
+                        </ion-text>
+                    </ion-row>
+                </form>
+            </ion-col>
+        </ion-row>
+        
+<!--         <div class="ion-text-center">
+            <ion-col>
+                <ion-text>Usuario Nuevo?</ion-text>
+                <ion-text color="primary " style="cursor: pointer;" routerDirection="root " routerLink="/register/"> Registrate Ya!</ion-text>
+            </ion-col>
+        </div> -->
+
+<!--         <div class="ion-text-center">
+            <a href="https://staging-dot-booapp.uc.r.appspot.com/connect/facebook"> <ion-icon class="iconSize" color="primary" name="logo-facebook"></ion-icon></a>  &nbsp;
+           
+            <ion-icon class="iconSize" color="danger" name="logo-google"></ion-icon>
+        </div> -->
+
+        <ion-row>
+            <ion-col size-sm="10" size-md="10" size-xs="10" size-lg="4" class="center">
+                <ion-button type="submit" color="facebook" expand="block" class="button-login" (click)="loginFacebook()">
+                    <ion-icon name="logo-facebook" slot="start"></ion-icon>
+                    Iniciar con Facebook
+                </ion-button>
+            </ion-col>
+        </ion-row>
+
+        <ion-row>
+            <ion-col size-sm="10" size-md="10" size-xs="10" size-lg="4" class="center">
+                <ion-button type="submit" color="google" expand="block" class="button-login ">
+                    <ion-icon name="logo-google" slot="start" color="danger"></ion-icon>
+                    Iniciar con Google
+                </ion-button>
+            </ion-col>
+        </ion-row>
+
+        <ion-row>
+            <ion-text class="ion-text-center center" color="danger">
+                <p><a style="font-size:14px;" href="/ " routerDirection="root " routerLink="/register/" tappable >Crea una cuenta</a></p>
+            </ion-text>
+        </ion-row>
+
+    </ion-grid>
+</ion-content>

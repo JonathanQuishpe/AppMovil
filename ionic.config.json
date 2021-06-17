@@ -1,0 +1,7 @@
+{
+  "name": "booApp",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

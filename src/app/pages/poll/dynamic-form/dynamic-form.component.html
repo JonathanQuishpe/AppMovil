@@ -1,0 +1,43 @@
+<ion-item-divider sticky>
+  <ion-progress-bar class="progress" value="{{(progressPoll/100)}}" [color]="changeColorProgressBar()" >
+  </ion-progress-bar>
+  <ion-badge class="progress" [color]="changeColorProgressBar()">{{progressPoll+'%'}}</ion-badge>
+</ion-item-divider>
+
+<ion-grid fixed>
+  <ion-row>
+    <ion-col size="12">
+
+      <form (ngSubmit)="onSubmit()" [formGroup]="form" >
+        <ion-row>
+          <!-- <ion-col size-sm="10" size-md="11" size-xs="10" size-lg="11" class="center"> -->
+          <ion-col class="center">
+            <div *ngFor="let question of poll.question" class="form-row">
+              <app-question *ngIf="question && poll.id" [question]="question" [form]="form" [idPoll]="poll.id" [namePoll]="poll.name" [questionsNumber]="sizeForm" [userRole]="userRole" [institution]="institution" [reward]="reward" [config]="config"
+                (getProgressPoll)="receiveProgressPoll($event)"></app-question>
+            </div>
+          </ion-col>
+        </ion-row>
+
+        <ion-row class="ion-text-center">
+          <ion-col size-md="10" class="center col-top-margin">
+            
+
+            <div>
+              <ion-button type="submit" color="secondary" expand="block" class="button-save-poll" [disabled]="form.invalid">
+                Guardar
+              </ion-button>
+              
+              <ion-button color="light" expand="block" class="button-save-poll" routerDirection="root" routerLink="/tabs/home">
+                Cancelar
+              </ion-button>
+            </div>
+          </ion-col>
+        
+        </ion-row>
+      </form>
+
+    </ion-col>
+  </ion-row>
+</ion-grid>
+

@@ -1,0 +1,629 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="header" class="ion-hide-md-up">
+    <ion-title>
+      <ion-label>
+        <ion-text class="ion-text-center">
+          <h2>Billetera</h2>
+        </ion-text>
+      </ion-label>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="background-gray">
+  <ion-toolbar class="ion-hide-md-up">
+    <ion-segment (ionChange)="chargePanel($event)" value="abstractPanel">
+      <ion-segment-button value="abstractPanel" class="button-login">
+        <ion-label>
+          <ion-text>
+            <p [style.font-size]="'12px'">Resumen</p>
+          </ion-text>
+        </ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="favoritePanel"  class="button-login">
+        <ion-label>
+          <ion-text>
+            <p [style.font-size]="'12px'">Favoritos</p>
+          </ion-text>
+        </ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="rewardsListPanel" class="button-login">
+        <ion-label>
+          <ion-text>
+            <p [style.font-size]="'12px'">Historial</p>
+          </ion-text>
+        </ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+  <div [ngSwitch]="panelDetail" class="ion-hide-md-up">
+    <div *ngSwitchCase="'abstractPanel'">
+      <ion-grid fixed>
+        <ng-container *ngIf="checkWallet(wallet); then walletTemplate; else noWalletTemplate"></ng-container>
+        <ng-template #walletTemplate>
+          <ion-row>
+            <ion-col size="12">
+              <div>     
+                <div>
+                  <ion-card class="card-poll-margin">
+                    <ion-item lines="none">
+                      <ion-img [src]="illustrationHome" class="center illustration-wallet"></ion-img>
+                    </ion-item>
+                    <div *ngIf="wallet">
+                      <ion-row>
+                        <ion-col size="4" class="padding-none">
+                          <ion-label>
+                            <ion-text class="ion-text-center">
+                              <p [style.font-size]="'10px'"><strong>Encuestas</strong></p>
+                            </ion-text>
+                          </ion-label>
+                        </ion-col>
+                        <ion-col size="4" class="padding-none">
+                          <ion-label>
+                            <ion-text class="ion-text-center">
+                              <p [style.font-size]="'10px'"><strong>Ahorro</strong></p>
+                            </ion-text>
+                          </ion-label>
+                        </ion-col>
+                        <ion-col size="4" class="padding-none">
+                          <ion-label>
+                            <ion-text class="ion-text-center">
+                              <p [style.font-size]="'10px'"><strong>Recompensas</strong></p>
+                            </ion-text>
+                          </ion-label>
+                        </ion-col>
+                      </ion-row>
+                      <ion-row >
+                        <ion-col size="4" class="padding-none">
+                          <ion-label>
+                            <ion-text class="ion-text-center">
+                              <h1><strong>{{wallet.length}}</strong></h1>
+                            </ion-text>
+                          </ion-label>
+                        </ion-col>
+                        <ion-col size="4" class="padding-none">
+                          <ion-label>
+                            <ion-text class="ion-text-center">
+                              <h1><strong>{{(costTotal - costClaimed) |
+                                currency}}</strong></h1>
+                            </ion-text>
+                          </ion-label>
+                        </ion-col>
+                        <ion-col size="4" class="padding-none">
+                          <ion-label>
+                            <ion-text class="ion-text-center">
+                              <h1><strong>{{rewardsClaimed}}/{{rewardsTotal}}</strong></h1>
+                            </ion-text>
+                          </ion-label>
+                        </ion-col>
+                      </ion-row>
+                    </div>
+                    <ion-row>
+                      <ion-col size="12"></ion-col>
+                    </ion-row>
+                  </ion-card>
+                </div>
+                <div class="item-traslucent">
+                  <ion-item lines="none" >
+                    <ion-label [ngStyle]="{'margin-bottom': 0}">
+                      <ion-text>
+                        <h2><strong>Tus recompensas</strong></h2>
+                      </ion-text>
+                    </ion-label>
+                  </ion-item>
+                </div>
+                <ion-card class="card-poll-margin card-padding-wallet">
+                  <ion-row>
+                    <ion-col size="6" class="padding-none">
+                      <ion-label>
+                        <ion-text class="ion-text-center">
+                          <p>Has canjeado</p>
+                        </ion-text>
+                      </ion-label>
+                    </ion-col>
+                    <ion-col size="6" class="padding-none">
+                      <ion-label>
+                        <ion-text class="ion-text-center">
+                          <p>No has canjeado</p>
+                        </ion-text>
+                      </ion-label>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="6" class="padding-none">
+                      <ion-label>
+                        <ion-text class="ion-text-center">
+                          <h1><strong>{{rewardsClaimed}}</strong></h1>
+                        </ion-text>
+                      </ion-label>
+                    </ion-col>
+                    <ion-col size="6" class="padding-none">
+                      <ion-label>
+                        <ion-text class="ion-text-center">
+                          <h1><strong>{{rewardsTotal - rewardsClaimed}}</strong></h1>
+                        </ion-text>
+                      </ion-label>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="6" class="padding-none">
+                      <ion-label>
+                        <ion-text class="ion-text-center">
+                          <p>Recompensas</p>
+                        </ion-text>
+                      </ion-label>
+                    </ion-col>
+                    <ion-col size="6" class="padding-none">
+                      <ion-label>
+                        <ion-text class="ion-text-center">
+                          <p>Recompensas</p>
+                        </ion-text>
+                      </ion-label>
+                    </ion-col>
+                  </ion-row>
+                </ion-card>
+                
+              </div>
+            </ion-col>
+          </ion-row>
+
+          <div class="item-traslucent" *ngIf="checkWallet(listRewardsToClaim)">
+            <ion-item lines="none" >
+              <ion-label [ngStyle]="{'margin-bottom': 0}">
+                <ion-text>
+                  <h2><strong>Recompensas por reclamar</strong></h2>
+                </ion-text>
+              </ion-label>
+            </ion-item>
+          </div>
+          
+          <ion-row *ngIf="checkWallet(listRewardsToClaim)">
+            <ion-col size-md="6" *ngFor="let walletElement of listRewardsToClaim; let i=index">
+              <ion-card class="card-poll-margin" tappable (click)="showReward(i)">
+                <ion-item lines="none">
+                  <ion-thumbnail [style.margin-right]="'10px'">
+                    <img [src]="onErrorImg(walletElement.reward.image)" />
+                  </ion-thumbnail>
+                  <ion-label >
+                    <!-- <h3><strong>Recompensa:</strong></h3> -->
+                    <h3>
+                    <!--   <ion-icon name="gift-outline" slot="end"></ion-icon> -->
+                      <strong>{{walletElement.reward.name}}</strong>
+                    </h3>
+                    <p>
+                      <!-- <ion-icon name="business-outline" slot="start"></ion-icon> -->
+                      {{walletElement.institution.name}}
+                    </p>
+                    <p>
+                      {{labelExpiredDate(walletElement.reward.validity)}} 
+                      <ion-text [color]="colorExpiredLabel(walletElement.reward.validity)">
+                        {{formatExpiredDate(walletElement.reward.validity)}}
+                      </ion-text>
+                    </p>
+                    
+                  </ion-label>
+                  <ion-icon name="chevron-forward" slot="end"></ion-icon>
+                </ion-item>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ng-template>
+
+        <ng-template #noWalletTemplate>   
+          <div class="img-default-no-data item-traslucent">
+            <ion-item lines="none">
+              <ion-label class="ion-text-center">
+                <p>Aún no tines billetera, <br/>
+                  llena una encuesta para crearla
+                </p>
+              </ion-label>
+            </ion-item>
+            <img src="../../../assets/img/billetera.png" />
+          </div>
+        </ng-template>
+      </ion-grid>
+    </div>
+    <!-- Panel Favorites componente de Favorite Poll -->
+    <div *ngSwitchCase="'favoritePanel'">
+      <app-favorite-poll></app-favorite-poll>
+    </div>
+    <!-- Panel Favorites componente de Favorite Poll -->
+    <div *ngSwitchCase="'rewardsListPanel'">
+      <ion-grid fixed>
+        <ng-container *ngIf="checkWallet(listRewardsClaimed) || checkWallet(listExpiredPolls); then ListRewardsTemplate; else noListRewardsTemplate"></ng-container>
+        <ng-template #ListRewardsTemplate >
+          <div class="item-traslucent" *ngIf="checkWallet(listExpiredPolls)">
+            <ion-item lines="none" >
+              <ion-label [ngStyle]="{'margin-bottom': 0}">
+                <ion-text>
+                  <h2><strong>Recompensas caducadas</strong></h2>
+                </ion-text>
+              </ion-label>
+            </ion-item>
+          </div>
+          <ion-row *ngIf="checkWallet(listExpiredPolls)">
+            <ion-col size="12" *ngFor="let walletElement of listExpiredPolls; let i=index">
+              <ion-card class="card-poll-margin" tappable (click)="showReward(i)">
+                <ion-item lines="none">
+                  <ion-thumbnail [style.margin-right]="'10px'">
+                    <img [src]="onErrorImg(walletElement.reward)" />
+                  </ion-thumbnail>
+                  <ion-label >
+                    <h3>
+                      <ion-icon name="gift-outline" slot="end"></ion-icon>
+                      {{walletElement.reward.name}}
+                    </h3>
+                    <p>
+                      <ion-icon name="business-outline" slot="start"></ion-icon>
+                      {{walletElement.institution.name}}
+                    </p>
+                    <ion-text color="success">
+                      <p><strong> Caducidad: </strong>{{walletElement.reward.validity}}</p>
+                    </ion-text>
+                  </ion-label>
+                  <ion-icon name="chevron-forward" slot="end"></ion-icon>
+                </ion-item>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+          <div class="item-traslucent" *ngIf="checkWallet(listExpiredPolls)">
+            <ion-item lines="none" >
+              <ion-label [ngStyle]="{'margin-bottom': 0}">
+                <ion-text>
+                  <h2><strong>Recompensas caducadas</strong></h2>
+                </ion-text>
+              </ion-label>
+            </ion-item>
+          </div>
+          <ion-row *ngIf="checkWallet(listExpiredPolls)">
+            <ion-col size-md="6" *ngFor="let walletElement of listExpiredPolls; let i=index">
+              <ion-card class="card-poll-margin" disabled="true">
+                <ion-item lines="none">
+                  <ion-thumbnail [style.margin-right]="'10px'">
+                    <img [src]="onErrorImg(walletElement.reward.image)" />
+                  </ion-thumbnail>
+                  <ion-label >
+                    <h3>
+                      <ion-icon name="gift-outline" slot="end"></ion-icon>
+                      {{walletElement.reward.name}}
+                    </h3>
+                    <p>
+                      <ion-icon name="business-outline" slot="start"></ion-icon>
+                      {{walletElement.institution.name}}
+                    </p>
+                    <ion-text color="danger">
+                      <p><strong>Caducidad: </strong>{{walletElement.reward.validity}}</p>
+                    </ion-text>
+                  </ion-label>
+                  <!-- <ion-icon name="chevron-forward" slot="end"></ion-icon> -->
+                </ion-item>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+            <div class="item-traslucent" *ngIf="checkWallet(listRewardsClaimed)">
+              <ion-item lines="none" >
+                <ion-label [ngStyle]="{'margin-bottom': 0}">
+                  <ion-text>
+                    <h2><strong>Recompensas reclamadas</strong></h2>
+                  </ion-text>
+                </ion-label>
+              </ion-item>
+            </div>
+          <ion-row *ngIf="checkWallet(listRewardsClaimed)">
+            <ion-col size-md="6" *ngFor="let walletElement of listRewardsClaimed; let i=index">
+              <ion-card class="card-poll-margin">
+                <ion-item lines="none">
+                  <ion-thumbnail [style.margin-right]="'10px'">
+                    <img [src]="onErrorImg(walletElement.reward.image)" />
+                  </ion-thumbnail>
+                  <ion-label >
+                    <h3>
+                      <ion-icon name="gift-outline" slot="end"></ion-icon>
+                      {{walletElement.reward.name}}
+                    </h3>
+                    <p>
+                      <ion-icon name="business-outline" slot="start"></ion-icon>
+                      {{walletElement.institution.name}}
+                    </p>
+                    <ion-text color="success">
+                      <p><strong>Cobro: </strong>{{walletElement.claim_date}}</p>
+                    </ion-text>
+                  </ion-label>
+                  <!-- <ion-icon name="chevron-forward" slot="end"></ion-icon> -->
+                </ion-item>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ng-template>
+        <ng-template #noListRewardsTemplate>
+          <div class="img-default-no-data item-traslucent">
+            <ion-item lines="none">
+              <ion-label class="ion-text-center">
+                <p>Aún no tines billetera, <br/>
+                  llena una encuesta para crearla
+                </p>
+              </ion-label>
+            </ion-item>
+            <img src="../../../assets/img/billetera.png" />
+          </div>
+        </ng-template>
+      </ion-grid>
+    </div>
+  </div>
+  <ion-row class="ion-hide-md-down padding-web">
+    <ion-col size="4">
+      <ng-container *ngIf="checkWallet(wallet); then walletTemplate; else noWalletTemplate"></ng-container>
+        <ng-template #walletTemplate>
+            <div class="item-traslucent">
+              <ion-item lines="none" >
+                <ion-label [ngStyle]="{'margin-bottom': 0}">
+                  <ion-text>
+                    <h2><strong>Billetera</strong></h2>
+                  </ion-text>
+                </ion-label>
+              </ion-item>
+            </div>
+            <ion-card class="card-poll-margin">
+              <ion-item lines="none">
+                <ion-img [src]="illustrationHome" class="center illustration-wallet"></ion-img>
+              </ion-item>
+              <div *ngIf="wallet">
+                <ion-row>
+                  <ion-col size="4" class="padding-none">
+                    <ion-label>
+                      <ion-text class="ion-text-center">
+                        <p [style.font-size]="'10px'"><strong>Encuestas</strong></p>
+                      </ion-text>
+                    </ion-label>
+                  </ion-col>
+                  <ion-col size="4" class="padding-none">
+                    <ion-label>
+                      <ion-text class="ion-text-center">
+                        <p [style.font-size]="'10px'"><strong>Ahorro</strong></p>
+                      </ion-text>
+                    </ion-label>
+                  </ion-col>
+                  <ion-col size="4" class="padding-none">
+                    <ion-label>
+                      <ion-text class="ion-text-center">
+                        <p [style.font-size]="'10px'"><strong>Recompensas</strong></p>
+                      </ion-text>
+                    </ion-label>
+                  </ion-col>
+                </ion-row>
+                <ion-row >
+                  <ion-col size="4" class="padding-none">
+                    <ion-label>
+                      <ion-text class="ion-text-center">
+                        <h1><strong>{{wallet.length}}</strong></h1>
+                      </ion-text>
+                    </ion-label>
+                  </ion-col>
+                  <ion-col size="4" class="padding-none">
+                    <ion-label>
+                      <ion-text class="ion-text-center">
+                        <h1><strong>{{(costTotal - costClaimed) |
+                          currency}}</strong></h1>
+                      </ion-text>
+                    </ion-label>
+                  </ion-col>
+                  <ion-col size="4" class="padding-none">
+                    <ion-label>
+                      <ion-text class="ion-text-center">
+                        <h1><strong>{{rewardsClaimed}}/{{rewardsTotal}}</strong></h1>
+                      </ion-text>
+                    </ion-label>
+                  </ion-col>
+                </ion-row>
+              </div>
+              <ion-row>
+                <ion-col size="12"></ion-col>
+              </ion-row>
+            </ion-card>
+          <div class="item-traslucent">
+            <ion-item lines="none" >
+              <ion-label [ngStyle]="{'margin-bottom': 0}">
+                <ion-text>
+                  <h2><strong>Tus recompensas</strong></h2>
+                </ion-text>
+              </ion-label>
+            </ion-item>
+          </div>
+          <ion-card class="card-poll-margin card-padding-wallet">
+            <ion-row>
+              <ion-col size="6" class="padding-none">
+                <ion-label>
+                  <ion-text class="ion-text-center">
+                    <p>Has canjeado</p>
+                  </ion-text>
+                </ion-label>
+              </ion-col>
+              <ion-col size="6" class="padding-none">
+                <ion-label>
+                  <ion-text class="ion-text-center">
+                    <p>No has canjeado</p>
+                  </ion-text>
+                </ion-label>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="6" class="padding-none">
+                <ion-label>
+                  <ion-text class="ion-text-center">
+                    <h1><strong>{{rewardsClaimed}}</strong></h1>
+                  </ion-text>
+                </ion-label>
+              </ion-col>
+              <ion-col size="6" class="padding-none">
+                <ion-label>
+                  <ion-text class="ion-text-center">
+                    <h1><strong>{{rewardsTotal - rewardsClaimed}}</strong></h1>
+                  </ion-text>
+                </ion-label>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="6" class="padding-none">
+                <ion-label>
+                  <ion-text class="ion-text-center">
+                    <p>Recompensas</p>
+                  </ion-text>
+                </ion-label>
+              </ion-col>
+              <ion-col size="6" class="padding-none">
+                <ion-label>
+                  <ion-text class="ion-text-center">
+                    <p>Recompensas</p>
+                  </ion-text>
+                </ion-label>
+              </ion-col>
+            </ion-row>
+            
+          </ion-card>
+        </ng-template>
+        <ng-template #noWalletTemplate>   
+          <div class="img-default-no-data item-traslucent">
+            <ion-item lines="none">
+              <ion-label class="ion-text-center">
+                <p>Aún no tines billetera, <br/>
+                  llena una encuesta para crearla
+                </p>
+              </ion-label>
+            </ion-item>
+            <img src="../../../assets/img/billetera.png" />
+          </div>
+        </ng-template>
+    </ion-col>
+    <ion-col size="4">
+      <ng-container *ngIf="checkWallet(listRewardsClaimed) || checkWallet(listRewardsToClaim) || checkWallet(listExpiredPolls); then ListRewardsTemplate; else noListRewardsTemplate"></ng-container>
+          <ng-template #ListRewardsTemplate >
+            <div class="item-traslucent" *ngIf="checkWallet(listRewardsToClaim)">
+              <ion-item lines="none" >
+                <ion-label [ngStyle]="{'margin-bottom': 0}">
+                  <ion-text>
+                    <h2><strong>Recompensas por reclamar</strong></h2>
+                  </ion-text>
+                </ion-label>
+              </ion-item>
+            </div>
+            <ion-row *ngIf="checkWallet(listRewardsToClaim)">
+              <ion-col size="12" *ngFor="let walletElement of listRewardsToClaim; let i=index">
+                <ion-card class="card-poll-margin" tappable (click)="showReward(i)">
+                  <ion-item lines="none">
+                    <ion-thumbnail [style.margin-right]="'10px'">
+                      <img [src]="onErrorImg(walletElement.reward)" />
+                    </ion-thumbnail>
+                    <ion-label >
+                      <h3>
+                        <ion-icon name="gift-outline" slot="end"></ion-icon>
+                        {{walletElement.reward.name}}
+                      </h3>
+                      <p>
+                        <ion-icon name="business-outline" slot="start"></ion-icon>
+                        {{walletElement.institution.name}}
+                      </p>
+                      <ion-text color="success">
+                        <p><strong> Caducidad: </strong>{{walletElement.reward.validity}}</p>
+                      </ion-text>
+                    </ion-label>
+                    <ion-icon name="chevron-forward" slot="end"></ion-icon>
+                  </ion-item>
+                </ion-card>
+              </ion-col>
+            </ion-row>
+            <div class="item-traslucent" *ngIf="checkWallet(listExpiredPolls)">
+              <ion-item lines="none" >
+                <ion-label [ngStyle]="{'margin-bottom': 0}">
+                  <ion-text>
+                    <h2><strong>Recompensas caducadas</strong></h2>
+                  </ion-text>
+                </ion-label>
+              </ion-item>
+            </div>
+            <ion-row *ngIf="checkWallet(listExpiredPolls)">
+              <ion-col size="12" *ngFor="let walletElement of listExpiredPolls; let i=index">
+                <ion-card class="card-poll-margin" disabled="true">
+                  <ion-item lines="none">
+                    <ion-thumbnail [style.margin-right]="'10px'">
+                      <img [src]="onErrorImg(walletElement.reward.image)" />
+                    </ion-thumbnail>
+                    <ion-label >
+                      <h3>
+                        <ion-icon name="gift-outline" slot="end"></ion-icon>
+                        {{walletElement.reward.name}}
+                      </h3>
+                      <p>
+                        <ion-icon name="business-outline" slot="start"></ion-icon>
+                        {{walletElement.institution.name}}
+                      </p>
+                      <ion-text color="danger">
+                        <p><strong>Caducidad: </strong>{{walletElement.reward.validity}}</p>
+                      </ion-text>
+                    </ion-label>
+                    <!-- <ion-icon name="chevron-forward" slot="end"></ion-icon> -->
+                  </ion-item>
+                </ion-card>
+              </ion-col>
+            </ion-row>
+            <div class="item-traslucent" *ngIf="checkWallet(listRewardsClaimed)">
+              <ion-item lines="none" >
+                <ion-label [ngStyle]="{'margin-bottom': 0}">
+                  <ion-text>
+                    <h2><strong>Recompensas reclamadas</strong></h2>
+                  </ion-text>
+                </ion-label>
+              </ion-item>
+            </div>
+            <ion-row *ngIf="checkWallet(listRewardsClaimed)">
+              <ion-col size="12" *ngFor="let walletElement of listRewardsClaimed; let i=index">
+                <ion-card class="card-poll-margin">
+                  <ion-item lines="none">
+                    <ion-thumbnail [style.margin-right]="'10px'">
+                      <img [src]="onErrorImg(walletElement.reward.image)" />
+                    </ion-thumbnail>
+                    <ion-label >
+                      <h3>
+                        <ion-icon name="gift-outline" slot="end"></ion-icon>
+                        {{walletElement.reward.name}}
+                      </h3>
+                      <p>
+                        <ion-icon name="business-outline" slot="start"></ion-icon>
+                        {{walletElement.institution.name}}
+                      </p>
+                      <ion-text color="success">
+                        <p><strong>Cobro: </strong>{{walletElement.claim_date}}</p>
+                      </ion-text>
+                    </ion-label>
+                    <!-- <ion-icon name="chevron-forward" slot="end"></ion-icon> -->
+                  </ion-item>
+                </ion-card>
+              </ion-col>
+            </ion-row>
+          </ng-template>
+          <ng-template #noListRewardsTemplate>
+            <div class="img-default-no-data item-traslucent">
+              <ion-item lines="none">
+                <ion-label class="ion-text-center">
+                  <p>Aún no tines billetera, <br/>
+                    llena una encuesta para crearla
+                  </p>
+                </ion-label>
+              </ion-item>
+              <img src="../../../assets/img/billetera.png" />
+            </div>
+          </ng-template>
+    </ion-col>
+    <ion-col size="4">
+      <div class="item-traslucent" >
+        <ion-item lines="none" >
+          <ion-label [ngStyle]="{'margin-bottom': 0}">
+            <ion-text>
+              <h2><strong>Favoritos</strong></h2>
+            </ion-text>
+          </ion-label>
+        </ion-item>
+      </div>
+      <app-favorite-poll></app-favorite-poll>
+    </ion-col>
+  </ion-row>
+</ion-content>

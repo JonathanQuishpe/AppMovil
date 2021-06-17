@@ -1,0 +1,55 @@
+<ion-header [translucent]="true" class="ion-hide-md-up">
+  <ion-toolbar color="header">
+    <ion-title>
+      <ion-label>
+        <ion-text class="ion-text-center">
+          <h2>Mi Perfil</h2>
+        </ion-text>
+      </ion-label>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="background-gray">
+  <ion-grid fixed>
+    <ion-row *ngIf="user">
+      <ion-col size="12">
+        <ion-card class="card-poll-margin">
+          <ion-item lines="none">
+            <ion-avatar slot="start">
+              <img [src]='random' alt="avatar">
+            </ion-avatar>
+            <ion-label >
+              <ion-text>
+                <h2><strong class="strong-color" >Usuario: </strong>{{user.username}}</h2>
+              </ion-text>
+              <ion-text>
+                <h3><strong class="strong-color">Email: </strong>{{user.email}}</h3>
+              </ion-text>
+            </ion-label>
+          </ion-item>
+        </ion-card> 
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="userList">
+      <ion-col size="12" class="center" *ngFor="let item of userList">
+        <ion-card class="card-poll-margin">
+          <ion-item lines="none" [routerLink]="item.url" routerLinkActive="selected" routerDirection="forward" detail=true>
+              <ion-icon slot="start" [name]="item.icon + '-outline'"></ion-icon>
+              <ion-label>{{item.name}}</ion-label>
+          </ion-item>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12">
+        <ion-button color="light" expand="block" class="button-logout" (click)="logout()">
+          <ion-text color="danger" class="text-button">
+            <p>Cerrar sesión</p>
+          </ion-text>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

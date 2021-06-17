@@ -1,0 +1,54 @@
+<!-- <ion-tabs *ngIf="user" (ionTabsDidChange)="ionTabsDidChange($event)">
+ -->
+  <ion-tabs *ngIf="user" >
+    <ion-header class="ion-hide-md-down">
+      <ion-toolbar color="header">
+        <ion-row>
+          <ion-col size="3" class="padding-none">
+            <ion-img src="assets/icon/boo-toolbar.svg" class="center logo-boo-cabecera"></ion-img>
+          </ion-col>
+          <ion-col size="5" class="padding" *ngIf="this.user.role.name != 'Establecimiento'">
+            <ion-searchbar class="padding-search-bar" placeholder="¿Qué quieres buscar hoy?" (ionChange)="onSearchChangePoll($event)" [debounce]="250"></ion-searchbar>
+            <!-- <ion-searchbar class="padding-search-bar" placeholder="¿Qué quieres buscar hoy?" [(ngModel)]="searchText"></ion-searchbar> -->
+          </ion-col>
+          
+          <ion-col size="1" class="padding " *ngIf="this.user.role.name != 'Establecimiento'">
+            <ion-button fill="solid"  color="light" (click)="showFilter()">
+              <ion-icon name="options" slot="start"></ion-icon>
+              Filtrar
+            </ion-button>
+          </ion-col>
+          <ion-col size="1" class="padding" *ngIf="this.user.role.name != 'Establecimiento'">
+            <ion-button fill="solid"  color="light" (click)="showOrder()">
+              <ion-icon name="filter" slot="start"></ion-icon>
+                Ordenar
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-toolbar>
+    </ion-header>
+  <ion-tab-bar slot="top" class="ion-hide-md-down" *ngIf="widthWindows >= 767" >
+      <ion-tab-button *ngFor="let tab of tabs; let i = index" [tab]="tab.tab">
+        <ion-icon [name]="tab.icon"></ion-icon>
+        <ion-label>{{tab.label}}</ion-label>
+      </ion-tab-button>
+  </ion-tab-bar>
+  <ion-tab-bar slot="bottom"  class="ion-hide-md-up" *ngIf="widthWindows < 767">
+    <ion-tab-button *ngFor="let tab of tabs; let i = index" [tab]="tab.tab">
+      <ion-icon [name]="tab.icon"></ion-icon>
+      <ion-label>{{tab.label}}</ion-label>
+    </ion-tab-button>
+   <!--  <ion-tab-button tab="home-establecimiento">
+      <ion-icon name="home"></ion-icon>
+      <ion-label>Home</ion-label>
+    </ion-tab-button>
+    <ion-tab-button tab="campanas">
+      <ion-icon name="documents"></ion-icon>
+      <ion-label>Campañas</ion-label>
+    </ion-tab-button>
+    <ion-tab-button tab="perfil">
+      <ion-icon name="person-circle"></ion-icon>
+      <ion-label>Perfil</ion-label>
+    </ion-tab-button> -->
+  </ion-tab-bar>
+</ion-tabs>

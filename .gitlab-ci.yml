@@ -1,0 +1,42 @@
+image: node:latest
+
+stages:
+  - build
+  - staging
+  - production
+
+cache:
+  paths:
+    - node_modules/
+
+install_dependencies:
+  stage: build
+  script:
+    - npm install
+  artifacts:
+    paths:
+      - node_modules/
+
+deploy_dev:
+  stage: staging
+  only:
+    - staging
+  script:
+    - npm install -g @ionic/cli
+    - npm install -g firebase-tools
+    - npm install
+    - ionic build --configuration=development
+    - firebase use --token $FIREBASE_DEPLOY_KEY default
+    - firebase deploy -m "Pipeline $CI_PIPELINE_ID, build $CI_BUILD_ID" --non-interactive --token $FIREBASE_DEPLOY_KEY
+
+deploy_production:
+  stage: production
+  only:
+    - master
+  script:
+    - npm install -g @ionic/cli
+    - npm install -g firebase-tools
+    - npm install
+    - ionic build --prod
+    - firebase use --token $FIREBASE_DEPLOY_KEY production
+    - firebase deploy -m "Pipeline $CI_PIPELINE_ID, build $CI_BUILD_ID" --non-interactive --token $FIREBASE_DEPLOY_KEY

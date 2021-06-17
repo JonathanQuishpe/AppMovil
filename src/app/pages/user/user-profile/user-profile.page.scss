@@ -1,0 +1,48 @@
+.form-space-top {
+  margin-top: 20px;
+}
+.error-message {
+  font-size: 0.7em;
+  color: var(--ion-color-danger);
+  text-align: center;
+}
+.item-avatar {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 150px !important; //any size
+  max-height: 150px !important; //any size
+}
+
+.imgRedonda {
+  display: block;
+  object-fit: cover;
+  width: 100% !important;
+  height: 150px !important;
+/*   max-width: 150px !important; //any size
+  max-height: 150px !important; //any size */
+  border-radius: 150px;
+  margin: 0px;
+}
+
+.chip {
+  height: 44px;
+  border-radius: 25px;
+}
+
+.buttonCamera {
+  position: absolute;
+  top: 0px;
+}
+
+.imgProfile {
+  width: 150px;
+  height: 150px;
+  margin: auto;
+}
+
+.spinnerCamera{
+  position: absolute;
+  top: 50%;
+  right: 50%;
+}

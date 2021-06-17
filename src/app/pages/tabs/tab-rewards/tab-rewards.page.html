@@ -1,0 +1,89 @@
+<ion-header [translucent]="true">
+  <ion-toolbar class=" ion-hide-md-up" color="header">
+    <ion-title>
+      <ion-label>
+        <ion-text class="ion-text-center">
+          <h2>Recompensas</h2>
+        </ion-text>
+      </ion-label>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="background-gray">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content>
+    </ion-refresher-content>
+  </ion-refresher>
+  <ion-grid fixed>
+    <div class="ion-hide-md-up">
+      <ion-row>
+        <ion-col size="12" >
+          <ion-searchbar class="padding-search-bar" placeholder="¿Qué quieres buscar hoy?" (ionChange)="onSearchChangePoll($event)" [debounce]="250"></ion-searchbar>
+        </ion-col>
+      </ion-row>
+    <ion-row>
+      <ion-col size="12" class="padding-top-bottom-none">
+        <ion-row>
+          <ion-col size="6" class="center">
+              <!-- <ion-button expand="block" class="button-login" color="light" (click)="showFilter()" [disabled]="filterCategory && filterPoll && filterReward ? true : false"> -->
+              <ion-button expand="block" class="button-login" color="light" (click)="showFilter()" [disabled]="filterCategory && filterPoll && filterReward ? false : true">
+                  <ion-icon name="options" slot="start"></ion-icon>
+                  Filtrar
+              </ion-button>
+            </ion-col>
+            <ion-col size="6"> 
+              <ion-button expand="block" class="button-login" color="light" (click)="showOrder()">
+                <ion-icon name="filter" slot="start"></ion-icon>
+                Ordenar
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </div>
+    <div class="ion-padding-top ion-hide-md-down"></div>
+    <ion-row *ngIf="!load" >
+      <ion-col *ngFor="let configPoll of configPolls | filterConfigPoll : searchText; let i = index;" size-md="6" size-lg="4" size-xs="12">
+        <ion-card class="card-poll-margin">
+          <img [src]="onErrorImg(configPoll.reward.image)" class="img-reward"  (click)="showDetails(i)" tappable>
+          <ion-item lines="none" button tappable>
+              <ion-label (click)="showDetails(i)" tappable>
+                <h3><strong>{{configPoll.reward.name}}</strong></h3>
+                <!-- <p>
+                  <ion-icon name="calendar-outline" slot="start"></ion-icon> {{configPoll.reward.validity}}
+                </p>
+                <p>
+                  <ion-icon name="business-outline" slot="start"></ion-icon> {{configPoll.institution.name}}
+                </p> -->
+                <!-- <p>{{configPoll.reward.validity}}</p> -->
+                <p>
+                  {{labelExpiredDate(configPoll.reward.validity)}} 
+                  <ion-text [color]="colorExpiredLabel(configPoll.reward.validity)">
+                    {{formatExpiredDate(configPoll.reward.validity)}}
+                  </ion-text>
+                </p>
+                <p>{{configPoll.institution.name}}</p>
+              </ion-label>
+              <ion-icon *ngIf="!configPoll.favorite" slot="end" name="star-outline" tappable (click)="addRemoveFavorite(i)" ></ion-icon>
+              <ion-icon *ngIf="configPoll.favorite" slot="end" name="star" tappable (click)="addRemoveFavorite(i)" color="warning" ></ion-icon> 
+          </ion-item>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="load">
+      <ion-col *ngFor="let item of [].constructor(50)" size-md="6" size-lg="4" size-xs="12">
+        <ion-card class="card-poll-margin">
+          <ion-skeleton-text animated style="height: 18em"></ion-skeleton-text>
+          <ion-item>
+            <ion-icon slot="end" name="star-outline"></ion-icon>
+            <ion-label>
+              <ion-skeleton-text animated style="height: 15px"></ion-skeleton-text>
+              <ion-skeleton-text animated style="height: 10px"></ion-skeleton-text>
+              <ion-skeleton-text animated style="height: 10px"></ion-skeleton-text>
+            </ion-label>
+          </ion-item>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

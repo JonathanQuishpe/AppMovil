@@ -1,0 +1,84 @@
+<ion-content class="background-gray">
+
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content>
+    </ion-refresher-content>
+  </ion-refresher>
+  <div class="color-cabecera ion-hide-md-up">
+    <ion-row>
+      <ion-col size="12" class="padding-none">
+        <ion-img [src]="uriLogo" class="center logo-boo-cabecera"></ion-img>
+      </ion-col>
+    </ion-row>
+  </div>
+  <ion-grid fixed>
+    <ion-row [style.margin-top]="'1em'">
+      <div class="item-traslucent">
+        <ion-col size="12" class="padding-none">
+            <ion-item *ngIf="user" lines="none" >
+              <ion-avatar slot="start">
+                <img [src]='random' alt="avatar">
+              </ion-avatar>
+              <ion-label>
+                <ion-text>
+                  <h2><strong>Hola {{user.username}}</strong></h2>
+                  <h3>¡Bienvenido!</h3>
+                </ion-text>
+              </ion-label>
+            </ion-item> 
+        </ion-col>
+      </div>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12">
+          <div class="item-traslucent">
+            <ion-item lines="none" >
+              <ion-label [ngStyle]="{'margin-bottom': 0}">
+                <ion-text>
+                  <h2><strong>Instituciones</strong></h2>
+                </ion-text>
+              </ion-label>
+            </ion-item>
+          </div>
+          <div>
+            <ion-card class="card-illustration-home" routerLink="/tabs/campanas">
+              <ion-item lines="none">
+                <ion-img [src]="illustrationHome" class="center illustration-wallet"></ion-img>
+              </ion-item>
+              <div *ngIf="user">
+                <ion-row>
+                  <ion-col size="8" class="padding-none center">
+                    <ion-label>
+                      <ion-text class="ion-text-center">
+                        <p [style.font-size]="'10px'"><strong>Instituciones que administras</strong></p>
+                      </ion-text>
+                    </ion-label>
+                  </ion-col>
+                </ion-row>
+                <ion-row *ngIf="user.institutions">
+                  <ion-col size="8" class="padding-none center">
+                    <ion-label>
+                      <ion-text class="ion-text-center">
+                        <h1><strong>{{user.institutions.length}}</strong></h1>
+                      </ion-text>
+                    </ion-label>
+                  </ion-col>
+                </ion-row>
+                <ion-row *ngIf="!user.institutions">
+                  <ion-col size="8" class="padding-none center">
+                    <ion-label>
+                      <ion-text class="ion-text-center">
+                        <p [style.font-size]="'10px'"><strong>Aún no has sido asignado a ninguna institución</strong></p>
+                      </ion-text>
+                    </ion-label>
+                  </ion-col>
+                </ion-row>
+              </div>
+            </ion-card>
+          </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+

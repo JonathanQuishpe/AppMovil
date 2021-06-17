@@ -1,0 +1,44 @@
+<ion-content class="background-traslucent">
+  <div *ngIf="showSlide" class="slide-modal">
+    <ion-slides pager="true" [options]="slideOpts">
+      <ion-slide *ngFor="let configPoll of configPolls; let i=index">
+        <ion-card class="card-poll-margin">
+          <img [src]="onErrorImg(configPoll.reward.image)" class="portada-slide" />
+          <ion-item lines="none" >
+            <ion-avatar slot="start">
+              <img [src]="onErrorImg(configPoll.institution.image)" />
+            </ion-avatar>
+            <!-- <ion-icon *ngIf="!isFavorite" slot="end" name="star-outline" tappable (click)="addFavorite()" ></ion-icon>
+              <ion-icon *ngIf="isFavorite" slot="end" name="star" tappable (click)="removeFavorite()" ></ion-icon>  -->
+            <!-- <ion-icon slot="end" name="star-outline"></ion-icon> -->
+            <ion-label class="ion-text-wrap">
+              <h3><strong>{{configPoll.poll.name}}</strong></h3>
+              <p><strong>Recibe: </strong>{{configPoll.reward.name}}</p>
+            </ion-label>
+          </ion-item>
+          <ion-row class="center margin-row-chip">
+            <ion-col size="10">
+              <ion-chip class="chip-circle">
+                <ion-icon *ngIf="!configPoll.favorite" name="star-outline" tappable (click)="addRemoveFavorite(i)" ></ion-icon>
+                <ion-icon *ngIf="configPoll.favorite" name="star" tappable (click)="addRemoveFavorite(i)" color="warning" ></ion-icon> 
+              </ion-chip>
+              <ion-chip class="chip-circle">
+                <ion-icon name="share-outline"></ion-icon>
+              </ion-chip>
+              <ion-chip class="chip-circle">
+                <ion-icon name="information-circle-outline"></ion-icon>
+              </ion-chip>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="10" class="center">
+                <ion-button type="submit" color="secondary" expand="block" class="button-margin-modal" (click)="showPoll(i)">
+                  Ir a la encuesta
+                </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-card>
+      </ion-slide>
+    </ion-slides>
+  </div>
+</ion-content>

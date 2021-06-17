@@ -1,0 +1,106 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="header">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/perfil"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      <ion-label>
+        <ion-text >
+          <h2>Establecimientos</h2>
+        </ion-text>
+      </ion-label>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="background-gray">
+  <ion-grid fixed *ngIf="userInstitutionsComplete">
+    <div *ngFor="let institution of userInstitutionsComplete; let i = index;">
+      <ion-row>
+        <ion-col size="12" class="center">
+          <ion-card class="card-poll-margin">
+            <ion-item lines="none" tappable (click)="toggleSection(i)" button>
+              <ion-avatar slot="start">
+                  <img [src]="onErrorImg(institution.image)">
+              </ion-avatar>
+              <ion-label>
+                <h3>{{institution.name}}</h3>
+                <p *ngIf="institution.branch_offices">
+                 {{numberOfBranchOffice(institution.branch_offices)}}
+                </p>
+              </ion-label>
+              <ion-icon name="chevron-down" slot="end" *ngIf=" numberOfBranchOffice(institution.branch_offices) != 'Sin sucursal'"></ion-icon>
+            </ion-item>
+            
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <div *ngIf="institution.open">
+        <ion-row *ngFor="let branchOffice of institution.branch_offices; let j = index;">
+          <ion-col size="12">
+            <ion-card class="card-poll-margin" tappable>
+              <ion-item>
+                <ion-label>
+                  <h3>{{branchOffice.name}}</h3>
+                  <p *ngIf="branchOffice.main_street">
+                    {{branchOffice.main_street}}
+                    <span *ngIf="branchOffice.side_street">
+                      {{' y '+branchOffice.main_street}}
+                    </span>
+                  </p>
+                </ion-label>
+                <!-- <ion-icon name="chevron-forward" slot="end"></ion-icon> -->
+              </ion-item>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </div>
+    </div>
+    
+  </ion-grid>
+</ion-content>
+
+<!-- <ion-content>
+  <ion-list *ngFor="let item of userInstitutions; let i = index;" detail="false">
+    <ion-item tappable (click)="toggleSection(i)" [ngClass]="{'section-active':item.open, 'section': !item.open }">
+      
+      <ion-icon slot="end" name="chevron-down"></ion-icon>
+      <ion-thumbnail slot="start">
+        <img [src]="onErrorImg([item.image])" />
+      </ion-thumbnail>
+      <ion-label>
+        <h2>{{item.name}}</h2>
+        <p *ngIf="item.main_street">
+          {{item.main_street}}<span *ngIf="item.side_street">
+            y {{item.side_street}}</span
+          >
+        </p>
+        <p *ngIf="item.cellphone">
+          {{item.cellphone}} <span *ngIf="item.phone"> / {{item.phone}}</span>
+        </p>
+      </ion-label>
+    </ion-item>
+
+    <ion-list *ngIf="item.open">
+      <ion-item *ngFor="let item of userInstitutions[i].branch_offices; let j = index;" color="light">
+        <ion-label>
+          <h3>{{institutionsComplete[i].branch_offices[j].name}}</h3>
+          <p *ngIf="institutionsComplete[i].branch_offices[j].main_street">
+            {{institutionsComplete[i].branch_offices[j].main_street}}
+            <span *ngIf="institutionsComplete[i].branch_offices[j].side_street">
+              y {{institutionsComplete[i].branch_offices[j].side_street}}</span
+            >
+          </p>
+          <p *ngIf="institutionsComplete[i].branch_offices[j].cellphone">
+            {{institutionsComplete[i].branch_offices[j].cellphone}}<span
+              *ngIf="institutionsComplete[i].branch_offices[j].phone"
+            >
+              / {{institutionsComplete[i].branch_offices[j].phone}}</span
+            >
+          </p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-list>
+</ion-content>
+ -->
