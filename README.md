@@ -1,6 +1,6 @@
 # BooApp Front Development 
 
-* Dev: https://booapp.web.app/
+* Dev:
 * Production: 
 
 ## Instalar Ionic
